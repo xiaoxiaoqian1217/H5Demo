@@ -1,0 +1,65 @@
+*{
+	padding: 0;
+	margin:0;
+}
+ul,li{
+	list-style: none;
+}
+div.parent{
+	width: 400px;
+	height: 300px;z
+}
+.controls{
+	background: rgb(209, 209, 209);
+    overflow: hidden;
+    padding: 5px;
+    position: relative;
+
+}
+.controls li{
+	margin-left: 5px;
+	float: left;
+
+}
+.time {
+
+	text-align: center;
+	font-size: 10px;
+    margin-top: 3px;
+
+}
+.pro_parent{
+	position:relative;
+                 
+}
+.circle{
+	margin-top: 3px;
+	width:15px;
+	height: 15px;
+	background: blue;
+	border-radius: 100%;
+	display: inline-block;
+	position: absolute;
+	
+}
+.sound{
+	margin-right:5px;
+}
+
+.progress{
+	margin-right:10px; 
+	margin-bottom:5px;
+  display: inline-block;
+  width:100px;
+  height: 5px;
+  background:red;
+}
+.audio{
+	width: 50px;
+}
+
+
+.fullscreen{
+	position: absolute;
+	right: 10px;
+}

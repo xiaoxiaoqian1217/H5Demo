@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>H5自定义播放器</title>
+</head>
+<link rel="stylesheet" href="">
+<link rel="stylesheet" href="./font.css">
+<link rel="stylesheet" href="./index.css">s
+<body>
+	<div class="parent">
+		<video    id="v1">
+
+	<source src="Intermission-Walk-in.ogv"></source>
+    <source src="Intermission-Walk-in_512kb.mp4"></source>
+
+</video>
+<ul  class="controls">
+	<li class="play" ><i class="video">&#xe61c;</i></li>
+	<li class="time"><span class="currentTime">00:00:00</span>/<span class="allTime">00:00:00</span></li>
+	<li class="pro_parent"><span class="select circle"></span><span id="pro1" class="progress"></span></li>
+	<li class="sound"><i class="video">&#xe645;</i></li>
+	<li class="pro_parent"><span class="select1 circle"></span><span class="audio progress"></span></li>
+    <li class="fullscreen"><i class="video">&#xe62c;</i></li>
+</ul>
+
+	</div>
+	
+<script>
+	var oV1=document.getElementById('v1');
+	var oPlay=document.querySelector(".play");
+	var sCurrentTime=document.querySelector(".currentTime");
+	var sAllTime=document.querySelector(".allTime");
+    var oCircle=document.querySelector('.select');
+    var oPro1=document.querySelector('#pro1');
+      var oSound=document.querySelector('.sound');
+      var oCircle1=document.querySelector('.select1');
+       var oAudio=document.querySelector('.audio');
+       var oFullscreen=document.querySelector(".fullscreen")
+
+
+   
+
+	oPlay.onclick=function(){
+		// paused 默认为true
+		if(oV1.paused){
+			oV1.play();
+			oV1.isPlay=true;
+            timer=setInterval(nowTime, 1000)
+
+		}else{
+			oV1.pause();
+			
+			clearInterval(timer);
+}
+		
+	}
+	oSound.onclick=function(){
+		//muted 默认false
+            if(oV1.muted){
+            	//
+                 	oV.volume = 1;
+                 	oV.volume=false;
+            }else{
+                       
+                	oV.volume = 0;
+                	oV.volume=true;
+
+
+            }
+	}
+	oFullscreen.onclick=function(){
+		//oV1.mozRequestFullScreen();
+		oV1.webkitRequestFullScreen();
+	}
+	oCircle.onmousedown=function(ev){
+        var ev = ev || window.event;
+        var disX=ev.clientX - oCircle.offsetLeft
+
+       document.onmousemove=function(ev){
+       	   var ev = ev || window.event;
+   
+           var  L=ev.clientX-disX;
+          if(L<0){
+				L = 0;
+			}
+			else if(L>oPro1.offsetWidth - oCircle.offsetWidth){
+				L = oPro1.offsetWidth - oCircle.offsetWidth;
+			}
+    
+                oCircle.style.left=L+'px';
+              	var scale = L/(oPro1.offsetWidth -oCircle.offsetWidth);
+			     //可以随着圆圈拖动的距离改变
+			    oV1.currentTime = scale * oV1.duration;
+                 nowTime();
+
+               
+		
+
+	}
+
+	document.onmouseup=function(){
+           document.onmousemove=null;
+ 
+	}
+	 
+ return false;
+}
+oCircle1.onmousedown=function(ev){
+        var ev = ev || window.event;
+        var disX=ev.clientX - oCircle1.offsetLeft
+
+       document.onmousemove=function(ev){
+       	   var ev = ev || window.event;
+   
+           var  L=ev.clientX-disX;
+          if(L<0){
+				L = 0;
+			}
+			else if(L>oAudio.offsetWidth - oCircle1.offsetWidth){
+				L = oAudio.offsetWidth - oCircle1.offsetWidth;
+			}
+    
+                oCircle1.style.left=L+'px';
+              	var scale = L/(oAudio.offsetWidth -oCircle1.offsetWidth);
+			     //可以随着圆圈拖动的距离改变
+			    oV1.volume = scale ;
+                 nowTime();
+
+               
+		
+
+	}
+	document.onmouseup=function(){
+           document.onmousemove=null;
+ 
+	}
+	 
+ return false;
+}
+
+	
+	function nowTime(){
+	 sCurrentTime.innerHTML=changeTime(oV1.currentTime);
+     var scale = oV1.currentTime/oV1.duration;
+		 oCircle.style.left = scale * (oPro1.offsetWidth+oCircle.offsetWidth) + 'px'
+
+	}
+	function changeTime(currentTime){
+
+         iNum = parseInt( currentTime );
+	  
+		var iH = toZero(Math.floor(iNum/3600));
+		var iM = toZero(Math.floor(iNum%3600/60));
+		var iS =toZero(Math.floor(iNum%60));
+	    return   iH+":"+iM+":"+iS;
+	}
+	function toZero(num){
+           if(num>9){
+             
+             return '' + num
+           }else{
+
+          return  '0' +num;
+           }
+
+	}
+</script>
+</body>
+</html>
