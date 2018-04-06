@@ -18,7 +18,7 @@
 <ul  class="controls">
 	<li class="play" ><i class="video">&#xe61c;</i></li>
 	<li class="time"><span class="currentTime">00:00:00</span>/<span class="allTime">00:00:00</span></li>
-	<li class="pro_parent"><span class="select circle"></span><span id="pro1" class="progress"></span></li>
+	<li id="li1" class="pro_parent"><span class="select circle"></span><span id="pro1" class="progress"></span></li>
 	<li class="sound"><i class="video">&#xe645;</i></li>
 	<li class="pro_parent"><span class="select1 circle"></span><span class="audio progress"></span></li>
     <li class="fullscreen"><i class="video">&#xe62c;</i></li>
@@ -28,6 +28,7 @@
 	
 <script>
 	var oV1=document.getElementById('v1');
+	var oLi1=document.getElementById('li1');
 	var oPlay=document.querySelector(".play");
 	var sCurrentTime=document.querySelector(".currentTime");
 	var sAllTime=document.querySelector(".allTime");
@@ -73,19 +74,20 @@
 		//oV1.mozRequestFullScreen();
 		oV1.webkitRequestFullScreen();
 	}
-	oCircle.onmousedown=function(ev){
+	oCircle.onmousedown=function(ev){                                                         
         var ev = ev || window.event;
-        var disX=ev.clientX - oCircle.offsetLeft
-
+        var disX=ev.clientX - oLi1.offsetLeft-oCircle.offsetLeft;
+   console.log(disX);
        document.onmousemove=function(ev){
        	   var ev = ev || window.event;
-   
-           var  L=ev.clientX-disX;
+                                                                                                                                                                                                          
+           var  L=ev.clientX-disX-oLi1.offsetLeft;
           if(L<0){
 				L = 0;
 			}
-			else if(L>oPro1.offsetWidth - oCircle.offsetWidth){
+			else if(L>=oPro1.offsetWidth - oCircle.offsetWidth){
 				L = oPro1.offsetWidth - oCircle.offsetWidth;
+				console.log(L)
 			}
     
                 oCircle.style.left=L+'px';
@@ -143,7 +145,7 @@ oCircle1.onmousedown=function(ev){
 	function nowTime(){
 	 sCurrentTime.innerHTML=changeTime(oV1.currentTime);
      var scale = oV1.currentTime/oV1.duration;
-		 oCircle.style.left = scale * (oPro1.offsetWidth+oCircle.offsetWidth) + 'px'
+		 oCircle.style.left = scale * (oPro1.offsetWidth-oCircle.offsetWidth) + 'px'
 
 	}
 	function changeTime(currentTime){
