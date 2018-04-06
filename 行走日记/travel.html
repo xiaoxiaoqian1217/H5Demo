@@ -68,6 +68,16 @@ li{ list-style:none;}
 	    createLi()
 		
 	}
+	aInput[4].onclick=function(){
+
+      navigator.geolocation.getCurrentPosition(function(position){
+         
+             console.log(position)
+
+      })
+
+                   
+	}
 	aBack[0].onclick=function(){
      startMove(oUl1,{left:0})
 
